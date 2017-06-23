@@ -1,0 +1,13 @@
+
+学到了什么？
+fixtures 可以用于初始化数据库
+
+
+ContentTypes是由Django框架提供的一个核心功能，
+它对当前项目中所有基于Django驱动的model提供了更高层次的抽象接口，是对model的一次封装，可以通过contenttypes动态的访问model类型，而不需要每次import具体的model类型。
+在第一次对Django的model进行migrate之后生成django_content_type表
+记录了当前的Django项目中所有model所属的app（即app_label属性）以及model的名字（即model属性）。
+可以对当前model设置了一个ContentType的外键，当前model的每个实例都具备一个ContentType的id作为外键，而ContentType的id恰恰代表着一个Model
+
+
+官方文档

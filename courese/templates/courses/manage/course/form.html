@@ -1,0 +1,26 @@
+<!--CourseCreateView、CourseUpdateView使用-->
+{% extends "base.html" %}
+{% block title %}
+    {% if object %}
+        编辑课程 "{{ object.title }}"
+    {% else %}
+        创建新课程
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <h1>
+        {% if object %}
+            Edit course "{{ object.title }}"
+        {% else %}
+            Create a new course
+        {% endif %}
+    </h1>
+    <div class="module">
+        <h2>Course info</h2>
+        <form action="." method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Save course"></p>
+        </form>
+    </div>
+{% endblock %}

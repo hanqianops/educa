@@ -17,3 +17,7 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ['title', 'overview']
     prepopulated_fields = {'slug': ('title',)}
     inlines = [ModuleInline]
+    actions = ['asset_approval',]
+    def asset_approval(self, request, querysets):
+        pass
+    asset_approval.short_description = "资产审批"

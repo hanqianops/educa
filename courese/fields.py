@@ -3,6 +3,10 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 class OrderField(models.PositiveIntegerField):
+    """
+    当没有指定的次序时自动分配一个次序值
+    课程模块按照所属的课程和相关模块的内容进行排序。
+    """
     def __init__(self, for_fields=None, *args, **kwargs):
         self.for_fields = for_fields
         super(OrderField, self).__init__(*args, **kwargs)

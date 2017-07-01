@@ -2,6 +2,8 @@ from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
+from django.db.models import Count
+from .models import Subject
 
 """
 LoginRequiredMixin：复制login_required装饰器的功能。
@@ -184,3 +186,27 @@ class ModuleContentListView(TemplateResponseMixin, View):
                                    course__owner=request.user)
 
         return self.render_to_response({'module': module})
+
+
+
+class CourseListView(TemplateResponseMixin, View):
+    """展示课程"""
+    model = Course
+    template_name = 'courses/course/list.html'
+    def get(self, request, subject=None):
+        subjects = Subject.objects.annotate(
+                      total_courses=Count('courses'))
+        courses = Course.objects.annotate(
+                      total_modules=Count('modules'))
+        if subject:
+            subject = get_object_or_404(Subject, slug=subject)
+            courses = courses.filter(subject=subject)
+        return self.render_to_response({'subjects':subjects, 'subject': subject, 'courses': courses})
+
+
+from django.views.generic.detail import DetailView
+
+class CourseDetailView(DetailView):
+    """展示课程详情"""
+    model = Course
+    template_name = 'courses/course/detail.html'
